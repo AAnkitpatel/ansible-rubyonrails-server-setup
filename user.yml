@@ -1,0 +1,20 @@
+- name: update packages
+  apt:
+    update_cache: true
+- name: add user
+  user:
+    name: "{{system_sudo_user}}"
+    groups: sudo
+    shell: /bin/bash
+- name: Add "{{system_sudo_user}}" user to sudoers file
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^"{{system_sudo_user}}".*ALL$'
+    line: '"{{system_sudo_user}}" ALL=(ALL) NOPASSWD: ALL'
+- name: add key into "{{system_sudo_user}}" user
+  authorized_key:
+    user: "{{system_sudo_user}}"
+    key: "{{ssh_pub_key}}"
+
+

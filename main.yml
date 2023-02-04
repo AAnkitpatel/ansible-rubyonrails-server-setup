@@ -1,0 +1,16 @@
+- name: main
+  gather_facts: no
+  hosts: all
+  remote_user: w3villa
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars_files:
+    - ./valiable.yml
+  tasks:
+    - include: ./user.yml
+    - include: ./packges.yml
+    - include: ./nginx.yml
+    - include: ./rvm.yml
+    - include: ./mysql5.7.yml
+    - include: ./redis.yml

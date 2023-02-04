@@ -1,0 +1,12 @@
+- name: install nginx
+  apt:
+    name: nginx
+    update_cache: yes
+    state: latest
+- name: 'Start the Nginx service'
+  become: true
+  ansible.builtin.service: 
+      name: nginx 
+      state: started
+      enabled: yes     
+
