@@ -1,12 +1,21 @@
-- name: Add specified repository into sources list
-  ansible.builtin.apt_repository:
-    repo: ppa:rael-gc/rvm
+
+- name: Install dependencies for Ruby
+  apt:
+    name:
+    - autoconf
+    - bison
+    - build-essential
+    - libssl-dev
+    - libyaml-dev
+    - libreadline-dev
+    - zlib1g-dev
+    - libncurses5-dev
     state: present
-    update_cache: true
-- name: rvm install
-  shell: "/bin/bash -c -l  'curl -sSL https://get.rvm.io | bash'"
-  register: rvm_output
-# - name: print rvm installation output
-# debug: var = rvm_output  
-- name: install ruby "{{ ruby_version}}"
+- name: Install RVM
+  shell: "curl -sSL https://get.rvm.io | bash"
+- name: Reload shell to use RVM
+  shell: "/bin/bash -l -c 'source /etc/profile.d/rvm.sh'"
+- name: Install Ruby
+  async: 300
+  poll: 10
   shell: /bin/bash -l -c "rvm install "{{ ruby_version }}""
