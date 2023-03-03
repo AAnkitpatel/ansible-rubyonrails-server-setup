@@ -1,33 +1,19 @@
+- name: Import GPG key for MySQL APT repository
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 467B942D3A79BD29
 
-   - name: 'Add public repository key mysql from ubuntu server'
-     ansible.builtin.apt_key:
-       keyserver: keyserver.ubuntu.com
-       id: 467B942D3A79BD29
-   - name: "mysql 5.7 apt repository"      
-     ansible.builtin.apt_repository:
-       repo: 'deb http://repo.mysql.com/apt/ubuntu bionic mysql-5.7'
-       state: present
-       update_cache: yes
-   - name: 'Install mysql client 5.7'
-     ansible.builtin.apt:
-       name: mysql-client=5.7*, mysql-client=5.7*, mysql-community-server=5.7*, mysql-server=5.7*, libmysqlclient-dev, python3-pip
-       state: present
-   - name: Install PyMySQL
-     pip:
-       name: pymysql
-       state: present   
-   - name: 'add db credentials'
-     community.mysql.mysql_user:
-       name: "{{ db_user }}"
-       password: "{{ db_pass }}"
-       priv: '*.*:ALL,GRANT'
-       state: present
-       login_unix_socket: /var/run/mysqld/mysqld.sock
-      
-   #check if mysql service is started
-   - name: 'Start the MySQL service'
-     become: true
-     ansible.builtin.service: 
-       name: mysql 
-       state: started
-       enabled: yes 
+- name: Add MySQL 5.7 repository
+  apt_repository:
+    repo: "deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-apt-config"
+    update_cache: yes
+    state: present
+    validate_certs: no
+- name: Install MySQL 5.7
+  apt:
+    name: mysql-server
+    state: present
+- name: Start MySQL service
+  service:
+    name: mysql
+    state: started

@@ -16,5 +16,3 @@
   authorized_key:
     user: "{{system_sudo_user}}"
     key: "{{ssh_pub_key}}"
-
-

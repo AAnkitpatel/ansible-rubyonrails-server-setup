@@ -5,7 +5,8 @@
     state: latest
 - name: 'Start the Redis service'
   become: true
-  ansible.builtin.service: 
-      name: redis-server
-      state: started
-      enabled: yes   
+  ansible.builtin.service:
+    name: redis-server
+    state: started
+    enabled: yes
+    use: service
