@@ -9,13 +9,13 @@
   vars:
     ansible_become_timeout: 30
   vars_files:
-  - ./valiable.yml
+  - ./variable/valiable.yml
   tasks:
-  - include: ./user.yml
-  - include: ./packges.yml
-  - include: ./nginx.yml
-  - include: ./rvm.yml
-  - include: ./mysql5.7.yml
-  - include: ./redis.yml
-  - include: ./node14.yml
+  - include: ./config/user.yml
+  - include: ./config/packges.yml
+  - include: ./config/nginx.yml
+  - include: ./config/rvm.yml
+  - include: ./config/mysql5.7.yml
+  - include: ./config/redis.yml
+  - include: ./config/node14.yml
 
